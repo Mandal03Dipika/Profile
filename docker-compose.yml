@@ -1,0 +1,26 @@
+services:
+  app:
+    build: .
+    container_name: profileCrud
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      - DB_URL=mysql://root:@db:3306/profile
+      - NODE_ENV=development
+
+  db:
+    image: mysql:8
+    container_name: mysql-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: profile
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:
